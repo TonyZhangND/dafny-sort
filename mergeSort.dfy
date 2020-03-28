@@ -1,11 +1,10 @@
-predicate sorted(a: array<int>)
-   reads a
-{
-   forall j, k :: 0 <= j < k < a.Length ==> a[j] <= a[k]
-}
+include "commons.dfy"
 
- 
-method Split(a: array<int>) returns (left: array<int>, right: array<int>) 
+module MergeSort{
+
+import opened Commons
+
+method split(a: array<int>) returns (left: array<int>, right: array<int>) 
     requires a.Length >= 2
     ensures a.Length == left.Length + right.Length
     ensures left.Length < a.Length && right.Length < a.Length
@@ -44,25 +43,25 @@ method Split(a: array<int>) returns (left: array<int>, right: array<int>)
 }
 
 
-method MergeSort(a: array<int>) returns (c: array<int>)
+method mergeSort(a: array<int>) returns (c: array<int>)
     decreases a.Length - 1
     ensures multiset(a[..]) ==  multiset(old(a)[..])
     ensures sorted(c)
     ensures c.Length == a.Length
 { 
     if a.Length > 1 {
-        var left, right := Split(a); 
+        var left, right := split(a); 
         assert left.Length >= 1 && right.Length >= 1;
-        var left_res := MergeSort(left);
-        var right_res := MergeSort(right);
-        c := Merge(left_res, right_res);
+        var left_res := mergeSort(left);
+        var right_res := mergeSort(right);
+        c := merge(left_res, right_res);
     } else {
         c := a;
     }
 }
 
 
-method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
+method merge(a: array<int>, b: array<int>) returns (c: array<int>)
     requires sorted(a) && sorted(b)
     requires a.Length >= 1 && b.Length >= 1
     ensures c.Length == a.Length + b.Length
@@ -148,16 +147,4 @@ method Merge(a: array<int>, b: array<int>) returns (c: array<int>)
     assert c[..c.Length] == c[..];
     assert multiset(c[..]) ==  multiset(a[..]) + multiset(b[..]);
 }
-
-method Main()
-{
-    print "Running MergeSort\n";
-    var a := new int[3];
-    a[0], a[1], a[2] := 8, 6, 4;
-    print "the sorted version of ";
-    print a;
-    print " is ";
-    var a_sorted := MergeSort(a);
-    print a_sorted;
-    print "\n";
 }
