@@ -26,8 +26,7 @@ method Main()
     print b_sorted;
     print "\n";
 
-    print "Running SelectionSort\n";
-    print "Running MergeSort\n";
+    print "\nRunning SelectionSort\n";
     var c := new int[3];
     c[0], c[1], c[2] := 8, 6, 4;
     print "The sorted version of ";
