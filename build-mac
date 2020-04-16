@@ -1,0 +1,12 @@
+dafnyc='/Users/zhang/Documents/dafny/dafny/Binaries/dafny /noCheating:1 /proverWarnings:1 /z3opt:pi.warnings=true /allowGlobals /ironDafny /warnShadowing /z3opt:nlsat.randomize=false /autoTriggers:1 /noNLarith /timeLimit:30'
+
+PROJECT_DIR='/Users/zhang/Dropbox/UMich2019fa/dafny-sort'
+$dafnyc /compileTarget:go /noVerify /compile:2 main.dfy
+
+export GOPATH=$PROJECT_DIR
+
+go build "$PROJECT_DIR/main.go"
+
+export GOPATH='/Users/zhang/go'
+export PATH=$PATH:$(go env GOPATH)/bin
+export GOPATH=$(go env GOPATH)

@@ -1,12 +1,14 @@
-dafnyc='/Users/zhang/Documents/dafny/dafny/Binaries/dafny /noCheating:1 /proverWarnings:1 /z3opt:pi.warnings=true /allowGlobals /ironDafny /warnShadowing /z3opt:nlsat.randomize=false /autoTriggers:1 /noNLarith /timeLimit:30'
+# Project build file for linux
+#!/bin/bash
 
-PROJECT_DIR='/Users/zhang/Dropbox/UMich2019fa/dafny-sort'
-$dafnyc /compileTarget:go /noVerify /compile:2 main.dfy
+dafnyc='/home/nudzhang/.vscode-server/extensions/correctnesslab.dafny-vscode-0.17.1/dafny/dafny/Dafny.exe /noCheating:1 /proverWarnings:1 /z3opt:pi.warnings=true /allowGlobals /ironDafny /warnShadowing /z3opt:nlsat.randomize=false /autoTriggers:1 /noNLarith /timeLimit:30'
+$dafnyc /compileTarget:go /compile:2 main.dfy
 
+PROJECT_DIR='/home/nudzhang/Documents/dafny-sort/main-go'
 export GOPATH=$PROJECT_DIR
 
-go build "$PROJECT_DIR/main.go"
+go build "$PROJECT_DIR/src/main.go"
 
-export GOPATH='/Users/zhang/go'
+export GOPATH='/home/nudzhang/go'
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
